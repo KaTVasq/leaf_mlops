@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Notebooks (exploration only, never main code)
+.ipynb_checkpoints/
+
+# Data: large, generated or license-restricted files are NOT versioned
+datasets/*/raw/
+datasets/*/processed/
+datasets/*/images/
+data/
+outputs/
+runs/
+mlruns/
+wandb/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.zip
+*.tar.gz
+
+# Keep dataset documentation
+!datasets/README.md
+!datasets/_template/
+!datasets/*/README.md
+!datasets/*/LICENSE_NOTES.md
+
+# LaTeX build artifacts
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.bbl
+report/*.blg
+report/*.fls
+report/*.fdb_latexmk
+report/*.synctex.gz
+report/build/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
