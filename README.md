@@ -50,5 +50,4 @@ If PowerShell blocks the activation script, run
 
 ## Thesis report
 
-The LaTeX source is in `report/`. See [`report/README.md`](report/README.md) for build
-instructions.
+The LaTeX source is in `report/`.
