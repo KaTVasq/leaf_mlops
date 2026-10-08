@@ -3,44 +3,33 @@
 Candidate datasets for hierarchical (family / genus / species) classification of tree
 species from leaf images.
 
-- **Last updated:** 06/10/2026
-- **Status legend:** `OK` license verified and project-compatible · `CHECK` must be verified before use · `NO` discarded
+- **Last updated:** 08/10/2026
 - Information below comes from the sources linked in each entry. Anything not confirmed
   is explicitly marked as *not verified*.
 
-## 1. Evaluation criteria
+## ## 1. Evaluation criteria
 
-A dataset is useful for this project if it offers:
+A dataset is useful for this project if it provides suitable leaf images for training and evaluating computer vision models for tree species identification.
 
-1. **Leaf images** with a species label (family and genus are derived afterwards via GBIF).
-2. **Taxonomic depth:** several species per genus and several genera per family, otherwise
-   the hierarchy carries no information.
-3. **Known capture conditions:** background, resolution, rulers or other artifacts that
-   the network could learn instead of the leaf.
-4. **A license compatible with research use** and, ideally, with redistribution of derivatives.
-5. **Metadata:** organ, author, location, date, original license.
-6. **Enough size** per class to train and evaluate.
-7. **Clear provenance:** source, publication and attribution requirements are documented.
+1. **Leaf images:** images should clearly show leaves and contain a species label. Datasets containing flowers, fruits or whole plants should be filtered where possible to retain only leaf images.
 
-## 2. Status interpretation
+2. **Tree species coverage:** preference should be given to datasets focused on tree species, with the species represented and the geographic scope of the collection documented.
 
-The status code is intended to communicate legal and operational readiness, not dataset
-quality alone:
+3. **Taxonomic depth:** the dataset should ideally include several species per genus and several genera per family. This makes it possible to explore hierarchical classification at species, genus and family levels.
 
-- `OK`: license is confirmed, the terms are compatible with project goals, and the dataset
-  can be used for research work.
-- `CHECK`: the dataset may be technically relevant, but its license or redistribution terms
-  require verification before inclusion in a final pipeline or public release.
-- `NO`: discarded because it is not suitable for the project (wrong target, insufficient
-  relevance, no usable image data, or license incompatibility).
+4. **Leaf morphology:** images should capture relevant visual characteristics, such as leaf shape, margin, venation, apex, base and petiole. The presence of simple and compound leaves may also be relevant, depending on the species covered.
 
-This matters because the final combined dataset may need to be homogenized under a single
-practical licensing policy.
+5. **Image diversity and capture conditions:** the dataset should include, or clearly distinguish between, isolated leaves on plain backgrounds and leaves photographed in natural environments. Lighting, shadows, image resolution, viewing angle and occlusion can affect recognition.
 
-## 3. Summary table
+6. **Number of images and class distribution:** the total number of images, the number of species and the number of images available per species should be recorded. A balanced representation is desirable, although smaller datasets may still be useful for specific experiments.
 
-| Dataset | Size | Main advantage | Main drawback | License | Status |
-|---------|------|----------------|---------------|---------|--------|
+7. **Label quality and metadata:** scientific names should be as reliable as possible. Additional information, such as genus, family, collection location, date and image source, is useful when available.
+
+8. **License and data provenance:** the dataset's usage conditions and original sources should be documented, including any attribution requirements or restrictions on image reuse and redistribution.
+
+## 2. Summary table
+
+| Dataset | Size | Main advantage | Main drawback | License |
 | Pl@ntNet-300K | 306,146 images, 1,081 species | Large, rich hierarchy, per-image metadata | All plant organs, natural backgrounds, long-tailed | Per-image / ambiguous in aggregate | CHECK |
 | PlantCLEF 2024-26 | ~1.4M images, 7,806 species | Huge, includes genera and families | Mixed organs, links to original images | Not verified | CHECK |
 | iNaturalist (AWS) | Millions | Very large, GPS and date | Noisy, not only leaves | Per image / mostly NC | CHECK |
@@ -52,9 +41,9 @@ practical licensing policy.
 | MalayaKew | Not verified | Visually similar classes | License not checked | Not verified | CHECK |
 | Small Mendeley sets | Hundreds of images | Some focus on venation | Tiny, one license each | Check each page | CHECK |
 
-## 4. Detailed entries
+## 3. Detailed entries
 
-### 4.1 Pl@ntNet-300K
+### 3.1 Pl@ntNet-300K
 
 - **Links:** https://zenodo.org/records/5645731 (v1.1) · https://zenodo.org/records/10419064 (v2) · https://github.com/plantnet/PlantNet-300K (code)
 - **Content:** 306,146 images covering 1,081 species (v1.1). Version 2 has 306,087 images
@@ -80,9 +69,8 @@ practical licensing policy.
 - **Related:** Pl@ntNet also publishes validated observations on GBIF
   (https://identify.plantnet.org/open_data). Attribution rules:
   https://my.plantnet.org/doc/references/using-images
-- **Status:** `CHECK`
 
-### 4.2 PlantCLEF 2024 / 2025 / 2026
+### 3.2 PlantCLEF 2024 / 2025 / 2026
 
 - **Links:** https://www.imageclef.org/PlantCLEF2024 · https://www.imageclef.org/node/347
 - **Content:** a subset of the Pl@ntNet training data for south-western Europe, 7,806
@@ -97,9 +85,8 @@ practical licensing policy.
   licenses are likely.
 - **Use in this project:** potentially useful as a larger expansion set, but only after
   license filtering and taxonomic checks.
-- **Status:** `CHECK`
 
-### 4.3 iNaturalist open data
+### 3.3 iNaturalist open data
 
 - **Links:** https://registry.opendata.aws/inaturalist-open-data · https://help.inaturalist.org/en/support/solutions/articles/151000173511
 - **Content:** licensed images of iNaturalist observations, accessible without an AWS account.
@@ -111,9 +98,8 @@ practical licensing policy.
 - **Disadvantages:** photos are of whole plants and other organs, high noise, mostly NC.
 - **Use in this project:** relevant as a broad, noisy source for pretraining or auxiliary
   supervision, but not as a clean leaf-only benchmark without heavy filtering.
-- **Status:** `CHECK`
 
-### 4.4 Leafsnap
+### 3.4 Leafsnap
 
 - **Links:** paper https://mlanthology.org/eccv/2012/kumar2012eccv-leafsnap/ · cropped subset (30 species) https://zenodo.org/record/5061352
 - **Content:** tree species of the northeastern United States (185). Two sources: "lab"
@@ -128,9 +114,8 @@ practical licensing policy.
 - **Use in this project:** useful for comparing lab vs field conditions after removing
   rulers and filtering out artifacts, but not a primary source unless the licensing is
   confirmed.
-- **Status:** `CHECK`
 
-### 4.5 Swedish Leaf
+### 3.5 Swedish Leaf
 
 - **Link:** https://cvl.isy.liu.se/research/datasets/swedish-leaf
 - **Content:** scanned leaves of 15 tree classes, 75 leaves each (1,125 images), on a plain
@@ -143,9 +128,8 @@ practical licensing policy.
 - **License:** no explicit license found on the page; cite the thesis.
 - **Use in this project:** good benchmark for pipeline validation and hierarchy testing, but
   too small to be a primary training source unless rights are clarified.
-- **Status:** `CHECK`
 
-### 4.6 Flavia
+### 3.6 Flavia
 
 - **Link:** https://flavia.sourceforge.net/
 - **Content:** 1,907 leaf images, 32 species, 50 to 77 images per species, scanned or
@@ -160,9 +144,8 @@ practical licensing policy.
   edge indicators), which may help prototype morphological labels.
 - **Use in this project:** useful for quick baseline comparisons, but not for a final dataset
   if no explicit rights are confirmed.
-- **Status:** `CHECK`
 
-### 4.7 UCI datasets
+### 3.7 UCI datasets
 
 - **Folio** (https://archive.ics.uci.edu/dataset/338/folio): 20 photos for each of 32
   species, 637 instances, white background. License **CC BY 4.0**. Species include
@@ -175,7 +158,7 @@ practical licensing policy.
 These are acceptable from a licensing standpoint but are not the target domain and therefore
 have low practical relevance for tree species classification.
 
-### 4.8 MalayaKew (MK)
+### 3.8 MalayaKew (MK)
 
 - **Link:** https://researchdata.um.edu.my/dataverse/fsktm (DOI 10.22452/RD/ED1RET)
 - **Content:** leaves collected at the Royal Botanic Gardens, Kew. Described as challenging
@@ -183,9 +166,8 @@ have low practical relevance for tree species classification.
 - **License:** *not verified.*
 - **Use in this project:** potentially useful for difficult intra-genus classification, but it
   cannot be considered until the repository terms are checked.
-- **Status:** `CHECK`
 
-### 4.9 Small Mendeley Data sets
+### 3.9 Small Mendeley Data sets
 
 Examples (each has its own license, to be read on its page):
 
@@ -198,7 +180,7 @@ Too small for the hierarchy, but the venation one may help to validate explainab
 A plant-pathology set (4,502 images, 22 categories by species and health state, CC BY 4.0)
 was **discarded**: it targets disease detection, not taxonomy.
 
-### 4.10 Not reviewed in detail yet
+### 3.10 Not reviewed in detail yet
 
 - ICL leaf dataset (a comparison table lists 220 species and 17,032 images).
 - Smithsonian isolated leaf database (343 leaves, 93 species).
@@ -208,7 +190,7 @@ was **discarded**: it targets disease detection, not taxonomy.
 These remain candidates for later review, especially if the core dataset shortlist is
 insufficient for the planned hierarchy or class balance.
 
-## 5. License implications for the combined dataset
+## 4. License implications for the combined dataset
 
 - The most restrictive license among the images used defines what can be done with the
   combined dataset.
@@ -221,13 +203,9 @@ insufficient for the planned hierarchy or class balance.
 - For this project, the legal risk is not only the dataset itself but also any derived model,
   processed copies or publication assets that may carry the source license forward.
 
-## 6. Proposed shortlist
+## 5. Proposed shortlist
 
 1. **Pl@ntNet-300K**, filtered by `organ = leaf` and by license (main candidate).
 2. **Swedish Leaf**, to validate the pipeline and the hierarchy.
 3. **Leafsnap**, to compare lab and field conditions after removing rulers.
 4. **PlantCLEF and iNaturalist (via GBIF)** as later expansion, filtering by license.
-
-This shortlist prioritizes the datasets with the strongest potential for taxonomy, while
-keeping a clear policy for licensing and redistribution.
-
