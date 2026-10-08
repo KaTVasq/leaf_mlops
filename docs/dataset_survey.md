@@ -7,7 +7,7 @@ species from leaf images.
 - Information below comes from the sources linked in each entry. Anything not confirmed
   is explicitly marked as *not verified*.
 
-## ## 1. Evaluation criteria
+## 1. Evaluation criteria
 
 A dataset is useful for this project if it provides suitable leaf images for training and evaluating computer vision models for tree species identification.
 
