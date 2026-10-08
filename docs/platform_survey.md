@@ -3,9 +3,7 @@
 Research on existing platforms and tools that can be used in the project.
 
 - **Last updated:** 08/10/2026
-- **Method:** web search of official documentation and papers where possible. Prices and
-  limits change, so figures carry a "verify" flag. Items marked *general knowledge* were
-  not re-checked in this survey.
+- **Method:** web search of official documentation and papers where possible.
 
 ## 1. Functions covered
 
