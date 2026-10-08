@@ -29,17 +29,19 @@ A dataset is useful for this project if it provides suitable leaf images for tra
 
 ## 2. Summary table
 
-| Dataset | Size | Main advantage | Main drawback | License |
-| Pl@ntNet-300K | 306,146 images, 1,081 species | Large, rich hierarchy, per-image metadata | All plant organs, natural backgrounds, long-tailed | Per-image / ambiguous in aggregate | CHECK |
-| PlantCLEF 2024-26 | ~1.4M images, 7,806 species | Huge, includes genera and families | Mixed organs, links to original images | Not verified | CHECK |
-| iNaturalist (AWS) | Millions | Very large, GPS and date | Noisy, not only leaves | Per image / mostly NC | CHECK |
-| Leafsnap | 185 species | Trees only, lab and field images | Rulers in lab images, northeastern USA | Not verified | CHECK |
-| Swedish Leaf | 1,125 images, 15 classes | Clean, several species per genus | Small, some classes only at genus level | No explicit license found | CHECK |
-| Flavia | 1,907 images, 32 species | Classic benchmark | Small, easy, plain background | Dataset license not explicit | CHECK |
-| Folio (UCI) | 637 images, 32 species | Clear license | Not trees | CC BY 4.0 | OK (low relevance) |
-| 100 leaves (UCI) | 1,600 samples, 100 species | Clear license | Mostly descriptors | CC BY 4.0 | OK (low relevance) |
-| MalayaKew | Not verified | Visually similar classes | License not checked | Not verified | CHECK |
-| Small Mendeley sets | Hundreds of images | Some focus on venation | Tiny, one license each | Check each page | CHECK |
+| Dataset             | Size                          | Main advantage                            | Main drawback                                      | License                            |
+| ------------------- | ----------------------------- | ----------------------------------------- | -------------------------------------------------- | ---------------------------------- |
+| Pl@ntNet-300K       | 306,146 images, 1,081 species | Large, rich hierarchy, per-image metadata | All plant organs, natural backgrounds, long-tailed | Per-image / ambiguous in aggregate |
+| PlantCLEF 2024-26   | ~1.4M images, 7,806 species   | Huge, includes genera and families        | Mixed organs, links to original images             | Not verified                       |
+| iNaturalist (AWS)   | Millions                      | Very large, GPS and date                  | Noisy, not only leaves                             | Per image / mostly NC              |
+| Leafsnap            | 185 species                   | Trees only, lab and field images          | Rulers in lab images, northeastern USA             | Not verified                       |
+| Swedish Leaf        | 1,125 images, 15 classes      | Clean, several species per genus          | Small, some classes only at genus level            | No explicit license found          |
+| Flavia              | 1,907 images, 32 species      | Classic benchmark                         | Small, easy, plain background                      | Dataset license not explicit       |
+| Folio (UCI)         | 637 images, 32 species        | Clear license                             | Not trees                                          | CC BY 4.0                          |
+| 100 leaves (UCI)    | 1,600 samples, 100 species    | Clear license                             | Mostly descriptors                                 | CC BY 4.0                          |
+| MalayaKew           | Not verified                  | Visually similar classes                  | License not checked                                | Not verified                       |
+| Small Mendeley sets | Hundreds of images            | Some focus on venation                    | Tiny, one license each                             | Check each page                    |
+
 
 ## 3. Detailed entries
 
