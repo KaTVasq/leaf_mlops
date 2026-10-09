@@ -17,10 +17,15 @@ jobs:
       - name: Compilar PDF de la Tesis
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: report/TFGTeXiS.tex
+          root_file: report/TFGTeXiS.tex # Ruta correcta en tu GitHub
+          # Forzamos los argumentos para ignorar errores menores y registrar todo
+          args: "-pdf -file-line-error -interaction=nonstopmode"
 
-      - name: Guardar PDF como artefacto
+      - name: Guardar PDF o Reporte de Errores
+        if: always() # Obliga a guardar los archivos creados incluso si la compilación falla
         uses: actions/upload-artifact@v4
         with:
-          name: TFG-PDF-Generado
-          path: report/TFGTeXiS.pdf
+          name: TFG-Resultado-O-Logs
+          path: |
+            report/TFGTeXiS.pdf
+            report/TFGTeXiS.log
