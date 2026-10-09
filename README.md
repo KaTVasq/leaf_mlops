@@ -10,7 +10,7 @@ Complutense de Madrid.
 src/leaf_mlops/   Python package (data, models, explain)
 datasets/         One directory per dataset (documentation only; data is not versioned)
 configs/          Experiment configuration files
-docs/             Documentation, data, and surveys developed for this thesis"
+docs/             Documentation, data, and surveys developed for this thesis
 report/           LaTeX thesis (see report/README.md)
 ```
 
