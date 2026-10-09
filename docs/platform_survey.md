@@ -174,15 +174,15 @@ Research on existing platforms and tools that can be used in the project.
 
 ## 8. Building blocks for a custom platform with user accounts (general knowledge, not researched here)
 
-| Layer | Options | Note |
-|-------|---------|------|
-| Backend | Django (accounts, admin and permissions included) or FastAPI (lighter, Python ML friendly) | |
+| Layer | Options |
+|-------|---------|
+| Backend | Django (accounts, admin and permissions included) or FastAPI (lighter, Python ML friendly) |
 | Database | PostgreSQL | |
-| Frontend | HTMX or React; installable web app (PWA) to use the phone camera | |
-| Model serving | Model loaded in the backend or a separate service | |
-| Background jobs | Task queue | |
-| Image storage | S3-compatible (Cloudflare R2, Backblaze B2, Garage) | |
-| Deployment | Docker on a VPS or a university server | |
+| Frontend | HTMX or React; installable web app (PWA) to use the phone camera |
+| Model serving | Model loaded in the backend or a separate service |
+| Background jobs | Task queue |
+| Image storage | S3-compatible (Cloudflare R2, Backblaze B2, Garage) |
+| Deployment | Docker on a VPS or a university server |
 
 ## 9. Privacy and license facts relevant to these platforms
 
