@@ -8,18 +8,11 @@ Complutense de Madrid.
 
 ```
 src/leaf_mlops/   Python package (data, models, explain)
-tests/            Automated tests (pytest)
-scripts/          Command-line entry points
 datasets/         One directory per dataset (documentation only; data is not versioned)
 configs/          Experiment configuration files
-docs/             Decision log and technical notes
+docs/             Documentation, data, and surveys developed for this thesis"
 report/           LaTeX thesis (see report/README.md)
 ```
-
-## Requirements
-
-- Python 3.10 or newer
-- Git
 
 ## Installation
 
@@ -49,5 +42,4 @@ If PowerShell blocks the activation script, run
 `Set-ExecutionPolicy -Scope Process RemoteSigned` first.
 
 ## Thesis report
-
 The LaTeX source is in `report/`.
