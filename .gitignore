@@ -24,8 +24,6 @@ checkpoints/
 *.pt
 *.pth
 *.ckpt
-*.zip
-*.tar.gz
 
 # Keep dataset documentation
 !datasets/README.md

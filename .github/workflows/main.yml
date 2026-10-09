@@ -1,0 +1,26 @@
+name: Compilar Tesis LaTeX
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Compilar PDF de la Tesis
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: report/TFGTeXiS.tex
+
+      - name: Guardar PDF como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: TFG-PDF-Generado
+          path: report/TFGTeXiS.pdf
