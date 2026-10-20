@@ -3,7 +3,7 @@
 Candidate datasets for hierarchical (family / genus / species) classification of tree
 species from leaf images.
 
-- **Last updated:** 08/10/2026
+- **Last updated:** 20/10/2026
 - Information below comes from the sources linked in each entry. Anything not confirmed
   is explicitly marked as *not verified*.
 
