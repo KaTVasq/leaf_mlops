@@ -9,23 +9,50 @@ species from leaf images.
 
 ## 1. Evaluation criteria
 
-A dataset is useful for this project if it provides suitable leaf images for training and evaluating computer vision models for tree species identification.
+A dataset is useful for this project if it can support not only hierarchical tree-species
+classification, but also the data-management, annotation, quality-control and model-evaluation
+needs of the other TFGs in the project.
 
-1. **Leaf images:** images should clearly show leaves and contain a species label. Datasets containing flowers, fruits or whole plants should be filtered where possible to retain only leaf images.
+A candidate dataset should therefore provide material that can be ingested, curated,
+annotated, versioned, exported and reused by different downstream projects.
 
-2. **Tree species coverage:** preference should be given to datasets focused on tree species, with the species represented and the geographic scope of the collection documented.
+1. **Leaf images with usable labels:** images should clearly show leaves and include a
+   reliable species label. Images of flowers, fruits or whole plants should be identifiable
+   and filterable through metadata.
 
-3. **Taxonomic depth:** the dataset should ideally include several species per genus and several genera per family. This makes it possible to explore hierarchical classification at species, genus and family levels.
+2. **Tree-species relevance:** preference should be given to datasets focused on tree
+   species. The geographic origin, collection context and taxonomic coverage should be
+   documented.
 
-4. **Leaf morphology:** images should capture relevant visual characteristics, such as leaf shape, margin, venation, apex, base and petiole. The presence of simple and compound leaves may also be relevant, depending on the species covered.
+3. **Hierarchical taxonomy:** the dataset should include enough species per genus and
+   genera per family to support classification and evaluation at species, genus and family
+   levels.
 
-5. **Image diversity and capture conditions:** the dataset should include, or clearly distinguish between, isolated leaves on plain backgrounds and leaves photographed in natural environments. Lighting, shadows, image resolution, viewing angle and occlusion can affect recognition.
+4. **Annotation and review potential:** images should be suitable for manual validation,
+   correction, quality assessment and potential additional labelling, such as leaf side,
+   capture conditions, image quality or morphological attributes.
 
-6. **Number of images and class distribution:** the total number of images, the number of species and the number of images available per species should be recorded. A balanced representation is desirable, although smaller datasets may still be useful for specific experiments.
+5. **Metadata quality:** each image should retain provenance information, including source,
+   author or contributor, license, taxonomic identifier, capture date and location when
+   available.
 
-7. **Label quality and metadata:** scientific names should be as reliable as possible. Additional information, such as genus, family, collection location, date and image source, is useful when available.
+6. **Dataset scale and class distribution:** the number of images, species, genera and
+   families should be known. The distribution of images per taxonomic class should be
+   documented to support fair evaluation and identification of long-tailed classes.
 
-8. **License and data provenance:** the dataset's usage conditions and original sources should be documented, including any attribution requirements or restrictions on image reuse and redistribution.
+7. **Image diversity:** the dataset should distinguish, where possible, isolated leaves on
+   controlled backgrounds from leaves photographed in natural environments. Variation in
+   lighting, resolution, viewpoint, occlusion and image quality is valuable for robust
+   evaluation.
+
+8. **Licensing, attribution and redistribution:** usage conditions must be explicit enough
+   to determine whether images can be stored, processed, shared, exported or used to train
+   and publish models.
+
+9. **Reusability for other TFGs:** the dataset should be exportable in a documented,
+   machine-readable format, with stable identifiers and metadata that allow other projects
+   to build datasets, benchmarks, annotation tasks or evaluation experiments without
+   duplicating the original collection work.
 
 ## 2. Summary table
 
@@ -211,3 +238,39 @@ insufficient for the planned hierarchy or class balance.
 2. **Swedish Leaf**, to validate the pipeline and the hierarchy.
 3. **Leafsnap**, to compare lab and field conditions after removing rulers.
 4. **PlantCLEF and iNaturalist (via GBIF)** as later expansion, filtering by license.
+
+## 6. Gap analysis
+
+No existing dataset simultaneously provides all of the following:
+
+- A large collection of tree-leaf images with reliable species labels and a documented
+  family-genus-species hierarchy.
+- Per-image metadata that supports filtering by plant organ, license, source, capture
+  conditions and taxonomic level.
+- A workflow for reviewing, correcting and validating automatic predictions or existing
+  labels.
+- Stable image and annotation identifiers that preserve the history of corrections,
+  reviews and dataset versions.
+- A storage-agnostic and exportable dataset format that can be reused by other TFGs for
+  annotation, benchmarking, model training or evaluation.
+- Explicit support for managing derived datasets, such as leaf-only subsets, license-filtered
+  subsets, balanced subsets or train/validation/test splits, without losing traceability to
+  the original images.
+
+Pl@ntNet-300K is the strongest starting point because it is large, taxonomically rich and
+includes per-image organ and license metadata. However, it is not a ready-to-use,
+leaf-only, validated and versioned dataset: it contains mixed plant organs, natural
+backgrounds, class imbalance and heterogeneous licenses. [2]
+
+Smaller datasets such as Swedish Leaf, Leafsnap and Flavia are useful for controlled
+experiments, but they do not provide the scale, metadata richness or annotation workflow
+required for a reusable platform. [2]
+
+Therefore, the project will create a platform that:
+
+- Ingests existing datasets, beginning with Pl@ntNet-300K.
+- Filters and organizes images using taxonomic and license metadata.
+- Provides review and correction workflows for predicted or imported labels.
+- Preserves image, annotation, user and dataset-version provenance.
+- Exports reproducible leaf-image datasets and associated metadata for other TFGs.
+- Supports storage backends that can be selected without changing the application logic.   
