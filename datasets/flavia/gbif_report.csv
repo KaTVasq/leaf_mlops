@@ -1,0 +1,33 @@
+key,original,status,gbif_name,gbif_status,gbif_family,findings
+1,Phyllostachys edulis (Carr.) Houz.,verified,Phyllostachys edulis,ACCEPTED,Poaceae,
+2,Aesculus chinensis,verified,Aesculus chinensis,ACCEPTED,Sapindaceae,
+3,Berberis anhweiensis Ahrendt,verified,Berberis anhweiensis,ACCEPTED,Berberidaceae,
+4,Cercis chinensis,verified,Cercis chinensis,ACCEPTED,Fabaceae,
+5,Indigofera tinctoria L.,verified,Indigofera tinctoria,ACCEPTED,Fabaceae,
+6,Acer Palmatum,verified,Acer palmatum,ACCEPTED,Sapindaceae,
+7,Phoebe nanmu (Oliv.) Gamble,needs_review,Phoebe nanmu,SYNONYM,Lauraceae,"GBIF status is SYNONYM; accepted species: 'Machilus nanmu'; GBIF genus is 'Machilus', mapping has 'Phoebe'"
+8,Kalopanax septemlobus (Thunb. ex A.Murr.) Koidz.,verified,Kalopanax septemlobus,ACCEPTED,Araliaceae,
+9,Cinnamomum japonicum Sieb.,needs_review,Magnoliopsida,ACCEPTED,,"GBIF match is HIGHERRANK ('Magnoliopsida'); GBIF rank is CLASS, expected SPECIES"
+10,Koelreuteria paniculata Laxm.,verified,Koelreuteria paniculata,ACCEPTED,Sapindaceae,
+11,Ilex macrocarpa Oliv.,verified,Ilex macrocarpa,ACCEPTED,Aquifoliaceae,
+12,Pittosporum tobira (Thunb.) Ait. f.,verified,Pittosporum tobira,ACCEPTED,Pittosporaceae,
+14,Chimonanthus praecox L.,verified,Chimonanthus praecox,ACCEPTED,Calycanthaceae,
+15,Cinnamomum camphora (L.) J. Presl,verified,Cinnamomum camphora,ACCEPTED,Lauraceae,
+16,Viburnum awabuki K.Koch,needs_review,Viburnum awabuki,SYNONYM,Viburnaceae,"GBIF status is SYNONYM; accepted species: 'Viburnum odoratissimum'; GBIF family is 'Viburnaceae', mapping has 'Adoxaceae'"
+17,Osmanthus fragrans Lour.,verified,Osmanthus fragrans,ACCEPTED,Oleaceae,
+18,Cedrus deodara (Roxb.) G. Don,verified,Cedrus deodara,ACCEPTED,Pinaceae,
+19,Ginkgo biloba L.,verified,Ginkgo biloba,ACCEPTED,Ginkgoaceae,
+20,Lagerstroemia indica (L.) Pers.,verified,Lagerstroemia indica,ACCEPTED,Lythraceae,
+21,Nerium oleander L.,verified,Nerium oleander,ACCEPTED,Apocynaceae,
+22,Podocarpus macrophyllus (Thunb.) Sweet,verified,Podocarpus macrophyllus,ACCEPTED,Podocarpaceae,
+23,Prunus serrulata Lindl. var. lannesiana auct.,verified,Prunus serrulata,ACCEPTED,Rosaceae,
+24,Ligustrum lucidum Ait. f.,verified,Ligustrum lucidum,ACCEPTED,Oleaceae,
+25,Tonna sinensis M. Roem.,verified,Toona sinensis,ACCEPTED,Meliaceae,
+26,Prunus persica (L.) Batsch,verified,Prunus persica,ACCEPTED,Rosaceae,
+27,Manglietia fordiana Oliv.,needs_review,Manglietia fordiana,SYNONYM,Magnoliaceae,"GBIF status is SYNONYM; accepted species: 'Magnolia fordiana'; GBIF genus is 'Magnolia', mapping has 'Manglietia'"
+28,Acer buergerianum Miq.,verified,Acer buergerianum,ACCEPTED,Sapindaceae,
+29,Mahonia bealei (Fortune) Carr.,verified,Mahonia bealei,ACCEPTED,Berberidaceae,
+30,Magnolia grandiflora L.,verified,Magnolia grandiflora,ACCEPTED,Magnoliaceae,
+31,Populus ×canadensis Moench,verified,Populus canadensis,ACCEPTED,Salicaceae,
+32,Liriodendron chinense (Hemsl.) Sarg.,verified,Liriodendron chinense,ACCEPTED,Magnoliaceae,
+33,Citrus reticulata Blanco,verified,Citrus reticulata,ACCEPTED,Rutaceae,

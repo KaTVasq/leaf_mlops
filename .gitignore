@@ -14,8 +14,11 @@ venv/
 # Data: large, generated or license-restricted files are NOT versioned
 datasets/*/raw/
 datasets/*/processed/
+datasets/*/interim/
+datasets/combined/
+datasets/_cache/
 datasets/*/images/
-data/
+/data/
 outputs/
 runs/
 mlruns/
@@ -49,3 +52,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Local configuration with secrets
+.env

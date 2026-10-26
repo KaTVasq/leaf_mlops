@@ -1,0 +1,294 @@
+{
+  "dataset": "flavia",
+  "taxonomy_source": "Class list copied from the table on the Flavia web page (labels 1-33, no label 13). Families, spelling fixes and synonyms are proposals only: nothing is verified against GBIF yet. Checked against the GBIF Backbone (species match API).",
+  "classes": {
+    "1": {
+      "original": "Phyllostachys edulis (Carr.) Houz.",
+      "family": "Poaceae",
+      "genus": "Phyllostachys",
+      "species": "Phyllostachys edulis",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: pubescent bamboo. A bamboo (grass), not a tree."
+    },
+    "2": {
+      "original": "Aesculus chinensis",
+      "family": "Sapindaceae",
+      "genus": "Aesculus",
+      "species": "Aesculus chinensis",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Chinese horse chestnut. Family follows APG IV (older: Hippocastanaceae)."
+    },
+    "3": {
+      "original": "Berberis anhweiensis Ahrendt",
+      "family": "Berberidaceae",
+      "genus": "Berberis",
+      "species": "Berberis anhweiensis",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Anhui Barberry."
+    },
+    "4": {
+      "original": "Cercis chinensis",
+      "family": "Fabaceae",
+      "genus": "Cercis",
+      "species": "Cercis chinensis",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Chinese redbud."
+    },
+    "5": {
+      "original": "Indigofera tinctoria L.",
+      "family": "Fabaceae",
+      "genus": "Indigofera",
+      "species": "Indigofera tinctoria",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: true indigo."
+    },
+    "6": {
+      "original": "Acer Palmatum",
+      "family": "Sapindaceae",
+      "genus": "Acer",
+      "species": "Acer palmatum",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Japanese maple. Table spells it 'Palmatum' (capital letter). Family follows APG IV."
+    },
+    "7": {
+      "original": "Phoebe nanmu (Oliv.) Gamble",
+      "family": "Lauraceae",
+      "genus": "Phoebe",
+      "species": "Phoebe nanmu",
+      "variant": null,
+      "status": "needs_review",
+      "note": "Common name: Nanmu. Check synonymy in GBIF. | GBIF: GBIF status is SYNONYM; accepted species: 'Machilus nanmu'; GBIF genus is 'Machilus', mapping has 'Phoebe'"
+    },
+    "8": {
+      "original": "Kalopanax septemlobus (Thunb. ex A.Murr.) Koidz.",
+      "family": "Araliaceae",
+      "genus": "Kalopanax",
+      "species": "Kalopanax septemlobus",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: castor aralia."
+    },
+    "9": {
+      "original": "Cinnamomum japonicum Sieb.",
+      "family": "Lauraceae",
+      "genus": "Cinnamomum",
+      "species": "Cinnamomum japonicum",
+      "variant": null,
+      "status": "needs_review",
+      "note": "Common name: Chinese cinnamon. Check synonymy in GBIF. | GBIF: GBIF match is HIGHERRANK ('Magnoliopsida'); GBIF rank is CLASS, expected SPECIES"
+    },
+    "10": {
+      "original": "Koelreuteria paniculata Laxm.",
+      "family": "Sapindaceae",
+      "genus": "Koelreuteria",
+      "species": "Koelreuteria paniculata",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: goldenrain tree."
+    },
+    "11": {
+      "original": "Ilex macrocarpa Oliv.",
+      "family": "Aquifoliaceae",
+      "genus": "Ilex",
+      "species": "Ilex macrocarpa",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Big-fruited Holly."
+    },
+    "12": {
+      "original": "Pittosporum tobira (Thunb.) Ait. f.",
+      "family": "Pittosporaceae",
+      "genus": "Pittosporum",
+      "species": "Pittosporum tobira",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Japanese cheesewood."
+    },
+    "14": {
+      "original": "Chimonanthus praecox L.",
+      "family": "Calycanthaceae",
+      "genus": "Chimonanthus",
+      "species": "Chimonanthus praecox",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: wintersweet."
+    },
+    "15": {
+      "original": "Cinnamomum camphora (L.) J. Presl",
+      "family": "Lauraceae",
+      "genus": "Cinnamomum",
+      "species": "Cinnamomum camphora",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: camphortree."
+    },
+    "16": {
+      "original": "Viburnum awabuki K.Koch",
+      "family": "Adoxaceae",
+      "genus": "Viburnum",
+      "species": "Viburnum awabuki",
+      "variant": null,
+      "status": "needs_review",
+      "note": "Common name: Japan Arrowwood. Family follows APG IV; may be a synonym of V. odoratissimum: check in GBIF. | GBIF: GBIF status is SYNONYM; accepted species: 'Viburnum odoratissimum'; GBIF family is 'Viburnaceae', mapping has 'Adoxaceae'"
+    },
+    "17": {
+      "original": "Osmanthus fragrans Lour.",
+      "family": "Oleaceae",
+      "genus": "Osmanthus",
+      "species": "Osmanthus fragrans",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: sweet osmanthus."
+    },
+    "18": {
+      "original": "Cedrus deodara (Roxb.) G. Don",
+      "family": "Pinaceae",
+      "genus": "Cedrus",
+      "species": "Cedrus deodara",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: deodar. Conifer (needle leaves)."
+    },
+    "19": {
+      "original": "Ginkgo biloba L.",
+      "family": "Ginkgoaceae",
+      "genus": "Ginkgo",
+      "species": "Ginkgo biloba",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: ginkgo, maidenhair tree."
+    },
+    "20": {
+      "original": "Lagerstroemia indica (L.) Pers.",
+      "family": "Lythraceae",
+      "genus": "Lagerstroemia",
+      "species": "Lagerstroemia indica",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Crape myrtle, Crepe myrtle."
+    },
+    "21": {
+      "original": "Nerium oleander L.",
+      "family": "Apocynaceae",
+      "genus": "Nerium",
+      "species": "Nerium oleander",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: oleander."
+    },
+    "22": {
+      "original": "Podocarpus macrophyllus (Thunb.) Sweet",
+      "family": "Podocarpaceae",
+      "genus": "Podocarpus",
+      "species": "Podocarpus macrophyllus",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: yew plum pine. Conifer."
+    },
+    "23": {
+      "original": "Prunus serrulata Lindl. var. lannesiana auct.",
+      "family": "Rosaceae",
+      "genus": "Prunus",
+      "species": "Prunus serrulata",
+      "variant": "lannesiana",
+      "status": "verified",
+      "note": "Common name: Japanese Flowering Cherry. Variety separated from the species name."
+    },
+    "24": {
+      "original": "Ligustrum lucidum Ait. f.",
+      "family": "Oleaceae",
+      "genus": "Ligustrum",
+      "species": "Ligustrum lucidum",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Glossy Privet."
+    },
+    "25": {
+      "original": "Tonna sinensis M. Roem.",
+      "family": "Meliaceae",
+      "genus": "Toona",
+      "species": "Toona sinensis",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Chinese Toon. Table spells the genus 'Tonna' (a typo; Toona is the plant genus): confirm."
+    },
+    "26": {
+      "original": "Prunus persica (L.) Batsch",
+      "family": "Rosaceae",
+      "genus": "Prunus",
+      "species": "Prunus persica",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: peach."
+    },
+    "27": {
+      "original": "Manglietia fordiana Oliv.",
+      "family": "Magnoliaceae",
+      "genus": "Manglietia",
+      "species": "Manglietia fordiana",
+      "variant": null,
+      "status": "needs_review",
+      "note": "Common name: Ford Woodlotus. | GBIF: GBIF status is SYNONYM; accepted species: 'Magnolia fordiana'; GBIF genus is 'Magnolia', mapping has 'Manglietia'"
+    },
+    "28": {
+      "original": "Acer buergerianum Miq.",
+      "family": "Sapindaceae",
+      "genus": "Acer",
+      "species": "Acer buergerianum",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: trident maple. Family follows APG IV."
+    },
+    "29": {
+      "original": "Mahonia bealei (Fortune) Carr.",
+      "family": "Berberidaceae",
+      "genus": "Mahonia",
+      "species": "Mahonia bealei",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Beale's barberry. Mahonia is now often merged into Berberis: check in GBIF."
+    },
+    "30": {
+      "original": "Magnolia grandiflora L.",
+      "family": "Magnoliaceae",
+      "genus": "Magnolia",
+      "species": "Magnolia grandiflora",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: southern magnolia."
+    },
+    "31": {
+      "original": "Populus ×canadensis Moench",
+      "family": "Salicaceae",
+      "genus": "Populus",
+      "species": "Populus × canadensis",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Canadian poplar. Hybrid (marked with the multiplication sign)."
+    },
+    "32": {
+      "original": "Liriodendron chinense (Hemsl.) Sarg.",
+      "family": "Magnoliaceae",
+      "genus": "Liriodendron",
+      "species": "Liriodendron chinense",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: Chinese tulip tree."
+    },
+    "33": {
+      "original": "Citrus reticulata Blanco",
+      "family": "Rutaceae",
+      "genus": "Citrus",
+      "species": "Citrus reticulata",
+      "variant": null,
+      "status": "verified",
+      "note": "Common name: tangerine."
+    }
+  }
+}
