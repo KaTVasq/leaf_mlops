@@ -3,7 +3,7 @@
 Candidate datasets for hierarchical (family / genus / species) classification of tree
 species from leaf images.
 
-- **Last updated:** 20/10/2026
+- **Last updated:** 26/10/2026
 - Information below comes from the sources linked in each entry. Anything not confirmed
   is explicitly marked as *not verified*.
 
@@ -15,6 +15,17 @@ needs of the other TFGs in the project.
 
 A candidate dataset should therefore provide material that can be ingested, curated,
 annotated, versioned, exported and reused by different downstream projects.
+
+### Needs of the other TFGs
+
+| TFG | What a dataset must offer |
+| --- | --- |
+| Hierarchical classification | Species labels that can be mapped to family, genus and species; several datasets with overlapping taxa, so that training on one and testing on another (domain shift) is possible. |
+| Segmentation | Images with different backgrounds and capture conditions (plain scans and field photos), including simple and compound leaves and several leaves per image. Background removal is expected to be the first step before classification. |
+| Morphological and frequency descriptors | Images (or masks) from which shape descriptors can be computed: circularity, width, length, Feret diameters, Fourier-based descriptors. Resolution and background affect these measurements, so they must be recorded. |
+
+Requirements 10 and 11 below come from these needs. The full list of platform
+requirements is in [requirements.md](requirements.md).
 
 1. **Leaf images with usable labels:** images should clearly show leaves and include a
    reliable species label. Images of flowers, fruits or whole plants should be identifiable
@@ -54,6 +65,15 @@ annotated, versioned, exported and reused by different downstream projects.
    to build datasets, benchmarks, annotation tasks or evaluation experiments without
    duplicating the original collection work.
 
+10. **Cost of label unification:** class names must be mappable to a single scientific
+    naming scheme. Datasets that use codes, common names or genus-only classes need a
+    reviewed mapping; the cheaper the mapping, the more useful the dataset
+    for cross-dataset experiments.
+
+11. **Recorded capture conditions:** background, capture type (scan or field photo),
+    resolution and whether samples are simple or compound leaves, so that domain shift
+    between datasets can be measured instead of guessed.
+
 ## 2. Summary table
 
 | Dataset             | Size                          | Main advantage                            | Main drawback                                      | License                            |
@@ -64,6 +84,7 @@ annotated, versioned, exported and reused by different downstream projects.
 | Leafsnap            | 185 species                   | Trees only, lab and field images          | Rulers in lab images, northeastern USA             | Not verified                       |
 | Swedish Leaf        | 1,125 images, 15 classes      | Clean, several species per genus          | Small, some classes only at genus level            | No explicit license found          |
 | Flavia              | 1,907 images, 32 species      | Classic benchmark                         | Small, easy, plain background                      | Dataset license not explicit       |
+| PlantCLEF 2015      | ~111,000 images (reported)    | Version currently used by the group       | Includes shrubs and flowers; year choice unjustified | Not verified                     |
 | Folio (UCI)         | 637 images, 32 species        | Clear license                             | Not trees                                          | CC BY 4.0                          |
 | 100 leaves (UCI)    | 1,600 samples, 100 species    | Clear license                             | Mostly descriptors                                 | CC BY 4.0                          |
 | MalayaKew           | Not verified                  | Visually similar classes                  | License not checked                                | Not verified                       |
@@ -174,6 +195,20 @@ annotated, versioned, exported and reused by different downstream projects.
 - **Use in this project:** useful for quick baseline comparisons, but not for a final dataset
   if no explicit rights are confirmed.
 
+### 3.6b PlantCLEF 2015 (version in use by the group)
+
+- **Content:** reported in the latest team meeting as about 111,000 images in total,
+  including shrubs and flowers, with fewer images remaining after filtering for leaves
+  (*figures from the meeting, not verified against the official overview*).
+- **Why it matters:** it is the dataset on which the first cross-dataset experiments were
+  run, with a clear drop in accuracy when the model was evaluated on a different dataset.
+- **Open point:** newer Pl@ntNet and PlantCLEF releases exist (see 3.1 and 3.2). A written
+  justification for using 2015 instead of a newer release is pending. Until then the year
+  must be recorded as part of the dataset version in every record.
+- **License:** *not verified.*
+- **Use in this project:** keep as the working dataset of the group, but do not treat 2015
+  as final until the comparison with newer releases is written down.
+
 ### 3.7 UCI datasets
 
 - **Folio** (https://archive.ics.uci.edu/dataset/338/folio): 20 photos for each of 32
@@ -235,9 +270,10 @@ insufficient for the planned hierarchy or class balance.
 ## 5. Proposed shortlist
 
 1. **Pl@ntNet-300K**, filtered by `organ = leaf` and by license (main candidate).
-2. **Swedish Leaf**, to validate the pipeline and the hierarchy.
+2. **Swedish Leaf** and **Flavia**, to validate the pipeline and the hierarchy.
 3. **Leafsnap**, to compare lab and field conditions after removing rulers.
-4. **PlantCLEF and iNaturalist (via GBIF)** as later expansion, filtering by license.
+4. **PlantCLEF and iNaturalist (via GBIF)** as later expansion, filtering by license. The
+   PlantCLEF release (2015 or newer) must be justified and fixed first (see 3.6b).
 
 ## 6. Gap analysis
 
@@ -253,6 +289,13 @@ No existing dataset simultaneously provides all of the following:
   reviews and dataset versions.
 - A storage-agnostic and exportable dataset format that can be reused by other TFGs for
   annotation, benchmarking, model training or evaluation.
+- Label names that are unified across datasets (scientific names normalised, synonyms
+  detected against a taxonomic authority) so that several sources can be trained on
+  together.
+- Capture metadata (background, capture type, resolution, simple or compound leaf) that
+  allows domain shift between datasets to be studied.
+- Room for additional annotation layers added later and linked to the same image: segmentation
+  masks, morphological features and frequency descriptors.
 - Explicit support for managing derived datasets, such as leaf-only subsets, license-filtered
   subsets, balanced subsets or train/validation/test splits, without losing traceability to
   the original images.
@@ -268,9 +311,14 @@ required for a reusable platform. [2]
 
 Therefore, the project will create a platform that:
 
-- Ingests existing datasets, beginning with Pl@ntNet-300K.
+- Ingests existing datasets through one reader per source into a common table, beginning
+  with Swedish Leaf and Flavia, and then Pl@ntNet-300K.
+- Unifies labels with a reviewable mapping per dataset, checked against a taxonomic
+  authority (GBIF).
+- Stores segmentation masks, morphological and frequency features as annotation layers
+  linked to the original image.
 - Filters and organizes images using taxonomic and license metadata.
 - Provides review and correction workflows for predicted or imported labels.
 - Preserves image, annotation, user and dataset-version provenance.
 - Exports reproducible leaf-image datasets and associated metadata for other TFGs.
-- Supports storage backends that can be selected without changing the application logic.   
+- Supports storage backends that can be selected without changing the application logic.
