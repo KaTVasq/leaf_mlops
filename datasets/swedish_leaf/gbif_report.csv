@@ -1,0 +1,16 @@
+key,original,status,gbif_name,gbif_status,gbif_family,findings
+1,Ulmus carpinifolia,verified,Ulmus carpinifolia,ACCEPTED,Ulmaceae,
+2,Acer,verified,Acer,ACCEPTED,Sapindaceae,
+3,Salix aurita,verified,Salix aurita,ACCEPTED,Salicaceae,
+4,Quercus,verified,Quercus,ACCEPTED,Fagaceae,
+5,Alnus incana,verified,Alnus incana,ACCEPTED,Betulaceae,
+6,Betula pubescens,verified,Betula pubescens,ACCEPTED,Betulaceae,
+7,Salix alba 'Sericea',verified,Salix alba,ACCEPTED,Salicaceae,
+8,Populus tremula,verified,Populus tremula,ACCEPTED,Salicaceae,
+9,Ulmus glabra,verified,Ulmus glabra,ACCEPTED,Ulmaceae,
+10,Sorbus aucuparia,verified,Sorbus aucuparia,ACCEPTED,Rosaceae,
+11,Salix sinerea,verified,Salix cinerea,ACCEPTED,Salicaceae,
+12,Populus,verified,Populus,ACCEPTED,Salicaceae,
+13,Tilia,verified,Tilia,ACCEPTED,Malvaceae,
+14,Sorbus intermedia,needs_review,Rosaceae,ACCEPTED,Rosaceae,"GBIF match is HIGHERRANK ('Rosaceae'); GBIF rank is FAMILY, expected SPECIES"
+15,Fagus silvatica,verified,Fagus sylvatica,ACCEPTED,Fagaceae,

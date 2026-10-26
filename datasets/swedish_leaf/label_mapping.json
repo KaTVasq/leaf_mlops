@@ -1,0 +1,141 @@
+{
+  "dataset": "swedish_leaf",
+  "taxonomy_source": "Proposals only (assistant draft). Nothing here is verified against GBIF yet. Checked against the GBIF Backbone (species match API).",
+  "classes": {
+    "1": {
+      "original": "Ulmus carpinifolia",
+      "family": "Ulmaceae",
+      "genus": "Ulmus",
+      "species": "Ulmus carpinifolia",
+      "variant": null,
+      "status": "verified",
+      "note": "Name kept as in the dataset. Possibly a synonym of Ulmus minor in current sources: check in GBIF."
+    },
+    "2": {
+      "original": "Acer",
+      "family": "Sapindaceae",
+      "genus": "Acer",
+      "species": null,
+      "variant": null,
+      "status": "verified",
+      "note": "Genus only. Family follows APG IV (older sources: Aceraceae): check in GBIF."
+    },
+    "3": {
+      "original": "Salix aurita",
+      "family": "Salicaceae",
+      "genus": "Salix",
+      "species": "Salix aurita",
+      "variant": null,
+      "status": "verified",
+      "note": ""
+    },
+    "4": {
+      "original": "Quercus",
+      "family": "Fagaceae",
+      "genus": "Quercus",
+      "species": null,
+      "variant": null,
+      "status": "verified",
+      "note": "Genus only."
+    },
+    "5": {
+      "original": "Alnus incana",
+      "family": "Betulaceae",
+      "genus": "Alnus",
+      "species": "Alnus incana",
+      "variant": null,
+      "status": "verified",
+      "note": ""
+    },
+    "6": {
+      "original": "Betula pubescens",
+      "family": "Betulaceae",
+      "genus": "Betula",
+      "species": "Betula pubescens",
+      "variant": null,
+      "status": "verified",
+      "note": ""
+    },
+    "7": {
+      "original": "Salix alba 'Sericea'",
+      "family": "Salicaceae",
+      "genus": "Salix",
+      "species": "Salix alba",
+      "variant": "Sericea",
+      "status": "verified",
+      "note": "Quoted variety separated from the species name."
+    },
+    "8": {
+      "original": "Populus tremula",
+      "family": "Salicaceae",
+      "genus": "Populus",
+      "species": "Populus tremula",
+      "variant": null,
+      "status": "verified",
+      "note": ""
+    },
+    "9": {
+      "original": "Ulmus glabra",
+      "family": "Ulmaceae",
+      "genus": "Ulmus",
+      "species": "Ulmus glabra",
+      "variant": null,
+      "status": "verified",
+      "note": ""
+    },
+    "10": {
+      "original": "Sorbus aucuparia",
+      "family": "Rosaceae",
+      "genus": "Sorbus",
+      "species": "Sorbus aucuparia",
+      "variant": null,
+      "status": "verified",
+      "note": ""
+    },
+    "11": {
+      "original": "Salix sinerea",
+      "family": "Salicaceae",
+      "genus": "Salix",
+      "species": "Salix cinerea",
+      "variant": null,
+      "status": "verified",
+      "note": "Dataset spelling 'sinerea' looks like a typo of 'cinerea': confirm."
+    },
+    "12": {
+      "original": "Populus",
+      "family": "Salicaceae",
+      "genus": "Populus",
+      "species": null,
+      "variant": null,
+      "status": "verified",
+      "note": "Genus only; same genus as Populus tremula (class 8)."
+    },
+    "13": {
+      "original": "Tilia",
+      "family": "Malvaceae",
+      "genus": "Tilia",
+      "species": null,
+      "variant": null,
+      "status": "verified",
+      "note": "Genus only. Family follows APG IV (older sources: Tiliaceae): check in GBIF."
+    },
+    "14": {
+      "original": "Sorbus intermedia",
+      "family": "Rosaceae",
+      "genus": "Sorbus",
+      "species": "Sorbus intermedia",
+      "variant": null,
+      "status": "needs_review",
+      "note": "GBIF: GBIF match is HIGHERRANK ('Rosaceae'); GBIF rank is FAMILY, expected SPECIES"
+    },
+    "15": {
+      "original": "Fagus silvatica",
+      "family": "Fagaceae",
+      "genus": "Fagus",
+      "species": "Fagus sylvatica",
+      "variant": null,
+      "status": "verified",
+      "note": "Dataset spelling 'silvatica' is a variant of 'sylvatica': confirm."
+    }
+  }
+}
