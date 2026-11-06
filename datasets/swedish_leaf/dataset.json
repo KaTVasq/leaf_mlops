@@ -1,0 +1,11 @@
+{
+  "name": "swedish_leaf",
+  "source_version": "unversioned",
+  "source_url": "https://cvl.isy.liu.se/research/datasets/swedish-leaf",
+  "license_id": "LicenseRef-unspecified",
+  "redistribution": "unknown",
+  "attribution": "Soderkvist, O. (2001). Master's thesis, Linkoping University, with the Swedish Museum of Natural History. Cite it when the data is used.",
+  "capture_type": "scan",
+  "background": "plain",
+  "license_note": "No explicit license was found on the dataset page. Use locally and cite; do not redistribute the images."
+}

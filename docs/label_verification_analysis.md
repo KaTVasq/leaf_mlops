@@ -137,13 +137,44 @@ Overlap decides which cross-dataset experiments are possible.
 
 In both shared genera the Swedish Leaf class is genus-only (classes 2 and 12 have no
 species), so comparison can only happen at genus level. A species-level experiment between
-these two datasets is not possible; a third dataset with overlapping species is needed.
+these two datasets is not possible; a third dataset with overlapping species is needed. Which one
+to add is decided by the gap it closes, as described in section 5 of the
+[dataset survey](dataset_survey.md).
 
-**Correction of an earlier figure.** An earlier run of `build_combined.py` reported only
-*Acer* as shared. That run used the local copy of Swedish Leaf, which contains only 2 of the
-15 classes (`leaf1` and `leaf2`, 150 images; `build_interim.py` warns about the missing
-classes). The table above is computed from the full mappings and is the reliable one. The
-combined table of images only reflects the classes whose images are present locally.
+**Check with the images.** The table above comes from the mappings. After downloading the 13
+missing Swedish Leaf classes (so all 15 are present, 1,125 scans), the combined table of images
+gives the same result: no shared species, and the genera *Acer* (Flavia 109, Swedish Leaf 75
+images) and *Populus* (Flavia 64, Swedish Leaf 150: 75 of *Populus tremula* and 75 labelled only
+as *Populus*). An earlier run, made when only 2 of the 15 classes were present, had reported just
+*Acer*; that figure was an effect of the incomplete download, not of the data.
+
+The complete combined dataset has 3,032 images, 25 families, 37 genera, 43 species and 4
+genus-only classes. Among its 47 classes the images per class go from 50 to 77 (ratio 1.54), so
+no class is small.
+
+### 6.1 Identical files inside Swedish Leaf
+
+Once every image had a SHA-256, the integrity part of the report found **3 groups of files with
+identical content under different identifiers**, all in class 8 (*Populus tremula*):
+
+| Files | Size (pixels) |
+| --- | --- |
+| `l8nr016` and `l8nr017` | 854 x 1279 |
+| `l8nr031` and `l8nr032` | 1093 x 1805 |
+| `l8nr070` and `l8nr071` | 1118 x 1455 |
+
+They are consecutive numbers of the same class with the same size and the same bytes, so the source
+stores the same scan twice. Each archive member is written independently by the extraction code, so
+this is a property of the source and not of the download.
+
+Why it matters: with a random train/test split, one copy can land in training and the other in the
+test set, which inflates the test accuracy. Here it affects 3 of the 75 images of one class (4%),
+which is small, but the same effect can be large in bigger sources that contain re-uploaded photos.
+
+What the project does about it: the raw files are never modified or deleted. The report counts the
+groups and the final-version check (`--release`) refuses a dataset that contains them, until a
+policy is decided (for example, keep one file per group and record the other as a duplicate of it).
+That policy is an open decision; the duplicates are not removed automatically.
 
 ## 7. Limits of this experiment
 
@@ -169,7 +200,7 @@ combined table of images only reflects the classes whose images are present loca
 ## 9. How to reproduce
 
 ```bash
-python -m pytest                          # 65 tests, offline
+python -m pytest                          # 101 tests, offline
 python scripts/verify_mapping.py swedish_leaf
 python scripts/verify_mapping.py flavia
 ```

@@ -22,7 +22,11 @@ FIELDS = (
     "width",
     "height",
     "sha256",
-    "license",
+    "source_version",
+    "source_url",
+    "license_id",
+    "redistribution",
+    "attribution",
 )
 
 
@@ -42,7 +46,11 @@ class ImageRecord:
     width: int | None = None
     height: int | None = None
     sha256: str = ""
-    license: str = ""
+    source_version: str = ""
+    source_url: str = ""
+    license_id: str = ""
+    redistribution: str = ""
+    attribution: str = ""
 
     @property
     def image_id(self) -> str:

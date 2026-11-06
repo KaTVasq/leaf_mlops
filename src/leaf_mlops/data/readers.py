@@ -7,24 +7,17 @@ Readers never modify or move raw files. They return the records and a list of pr
 from __future__ import annotations
 
 import csv
-import hashlib
 import re
 from pathlib import Path
 
+from leaf_mlops.data.integrity import sha256_file
 from leaf_mlops.data.mapping import LabelEntry, MappingError
+from leaf_mlops.data.provenance import DatasetInfo
 from leaf_mlops.data.schema import ImageRecord
 
 SWEDISH_NAME = re.compile(r"^l(\d+)nr(\d+)$", re.IGNORECASE)  # e.g. l9nr003.tif
 SWEDISH_SUFFIXES = {".tif", ".tiff"}
 FLAVIA_SUFFIXES = {".jpg", ".jpeg"}
-
-
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with open(path, "rb") as handle:
-        for chunk in iter(lambda: handle.read(1 << 20), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _image_size(path: Path) -> tuple[int | None, int | None]:
@@ -40,17 +33,14 @@ def _image_size(path: Path) -> tuple[int | None, int | None]:
 def _make_record(
     raw_dir: Path,
     path: Path,
-    dataset: str,
+    info: DatasetInfo,
     entry: LabelEntry,
-    capture_type: str,
-    background: str,
-    license_note: str,
     compute_hash: bool,
     read_size: bool,
 ) -> ImageRecord:
     width, height = _image_size(path) if read_size else (None, None)
     return ImageRecord(
-        source_dataset=dataset,
+        source_dataset=info.name,
         source_image_id=path.stem.lower(),
         file_path=path.relative_to(raw_dir).as_posix(),
         original_label=entry.original,
@@ -58,18 +48,23 @@ def _make_record(
         genus=entry.genus,
         species=entry.species or "",
         mapping_status=entry.status,
-        capture_type=capture_type,
-        background=background,
+        capture_type=info.capture_type,
+        background=info.background,
         width=width,
         height=height,
-        sha256=_sha256(path) if compute_hash else "",
-        license=license_note,
+        sha256=sha256_file(path) if compute_hash else "",
+        source_version=info.source_version,
+        source_url=info.source_url,
+        license_id=info.license_id,
+        redistribution=info.redistribution,
+        attribution=info.attribution,
     )
 
 
 def read_swedish_leaf(
     raw_dir: str | Path,
     mapping: dict[str, LabelEntry],
+    info: DatasetInfo,
     compute_hash: bool = False,
     read_size: bool = False,
 ) -> tuple[list[ImageRecord], list[str]]:
@@ -94,10 +89,7 @@ def read_swedish_leaf(
 
     found.sort(key=lambda item: (item[0], item[1]))
     records = [
-        _make_record(
-            raw_dir, path, "swedish_leaf", entry, "scan", "plain",
-            "unspecified; cite Soderkvist 2001", compute_hash, read_size,
-        )
+        _make_record(raw_dir, path, info, entry, compute_hash, read_size)
         for _, _, path, entry in found
     ]
     return records, sorted(problems)
@@ -131,6 +123,7 @@ def read_flavia(
     raw_dir: str | Path,
     ranges: list[tuple[int, int, str]],
     mapping: dict[str, LabelEntry],
+    info: DatasetInfo,
     compute_hash: bool = False,
     read_size: bool = False,
 ) -> tuple[list[ImageRecord], list[str]]:
@@ -161,10 +154,7 @@ def read_flavia(
 
     found.sort(key=lambda item: item[0])
     records = [
-        _make_record(
-            raw_dir, path, "flavia", entry, "scan_or_camera", "plain",
-            "unspecified; cite Wu et al. 2007", compute_hash, read_size,
-        )
+        _make_record(raw_dir, path, info, entry, compute_hash, read_size)
         for _, path, entry in found
     ]
     return records, sorted(problems)

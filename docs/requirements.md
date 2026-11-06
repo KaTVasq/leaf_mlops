@@ -4,7 +4,7 @@ Requirements of the platform for creating, annotating, versioning and managing t
 image datasets. The technology choices in [platform_survey.md](platform_survey.md) are
 derived from this document, not the other way round.
 
-- **Last updated:** 26/10/2026
+- **Last updated:** 06/11/2026
 - **Priority** uses MoSCoW: **M**ust, **S**hould, **C**ould. *Won't (now)* items are listed
   at the end.
 - **Source** says where each requirement comes from, so it can be traced in the report:
@@ -30,7 +30,7 @@ TFGs share it:
 | ID | Requirement | Priority | Source |
 | --- | --- | --- | --- |
 | FR-01 | Ingest a dataset through a reader that converts its own layout into a common table with one row per image, without modifying the raw files. Files that cannot be labelled are reported, not dropped silently. | M | Project, Survey |
-| FR-02 | Keep provenance for every image: source dataset and version, source image id, author, license, SHA-256 of the file. | M | Survey, Meeting |
+| FR-02 | Keep provenance for every image in structured, filterable fields: source dataset and version, source image id, source URL, license as an SPDX or `LicenseRef-` identifier (never free text), redistribution permission, attribution and SHA-256 of the file. | M | Survey, Meeting, Tutor |
 | FR-03 | Unify labels across datasets: normalise scientific names (case, hyphens, authorities, hybrids), keep a reviewable mapping per dataset from original label to canonical name, and mark each entry as verified, proposed or needing review. | M | Meeting |
 | FR-04 | Check the mapping against a taxonomic authority (GBIF Backbone) and report synonyms, family disagreements and unknown names. Taxonomy is never changed automatically. | M | Meeting, Tutor |
 | FR-05 | Derive family and genus from the species and support classes that only reach genus level (for example "Acer" in Swedish Leaf). | M | Project, Meeting |
@@ -46,6 +46,8 @@ TFGs share it:
 | FR-15 | Upload a new image, remove sensitive EXIF data (for example GPS) and store it with its provenance. | C | Project |
 | FR-16 | Run a trained classifier on an uploaded image and store the prediction with its confidence. | C | Project |
 | FR-17 | Register data augmentation or preprocessing recipes (for example white background) as derived versions rather than overwriting originals. | C | Meeting |
+| FR-18 | Freeze, for every dataset version, the link between each taxonomic class and the integer id used by models. Later builds are checked against it and cannot change it. | M | Tutor |
+| FR-19 | Generate a report of each harmonised dataset: images, families, genera, species, class distribution, items pending review, licenses, capture conditions and integrity. | M | Tutor |
 
 ## 3. Non-functional requirements
 
@@ -61,6 +63,7 @@ TFGs share it:
 | NFR-08 | **Privacy:** uploaded images are stripped of location metadata before storage. | S | Project |
 | NFR-09 | **Language:** code, documentation and exported metadata are in English, because the reuse is international. | M | Project |
 | NFR-10 | **Interoperability:** exports do not depend on this platform to be read (open formats). | M | Meeting |
+| NFR-11 | **Integrity:** the SHA-256 of every image is mandatory in final dataset versions, which are also required to have verified labels, no duplicate files and valid license fields. | M | Tutor |
 
 ## 4. Decisions still open
 
@@ -70,7 +73,9 @@ These need an answer from the team before the corresponding requirement can be c
    releases exist. A written justification of the chosen year is pending; the version must
    then be fixed in the dataset records (FR-02, FR-08).
 2. **Common dataset subset.** Which datasets the three TFGs will share for cross-dataset
-   experiments. Only datasets with a clear license should be included (NFR-02).
+   experiments. Only datasets with a clear license should be included (NFR-02). The next dataset
+   is chosen by the concrete gap it closes (species overlap, natural backgrounds, license
+   clarity), not by its size; see section 5 of the dataset survey.
 3. **Simple versus compound leaves.** Decision so far: do not filter, store the attribute (FR-06).
 4. **Where masks and features are produced.** The segmentation and descriptor TFGs
    produce them; this platform only stores and versions them (FR-07). The exchange format

@@ -1,0 +1,11 @@
+{
+  "name": "flavia",
+  "source_version": "unversioned",
+  "source_url": "https://flavia.sourceforge.net/",
+  "license_id": "LicenseRef-unspecified",
+  "redistribution": "unknown",
+  "attribution": "Wu et al. (2007), the Flavia authors' paper. Cite it when the data is used; see the dataset page.",
+  "capture_type": "scan_or_camera",
+  "background": "plain",
+  "license_note": "The authors ask to cite their paper. The GPL v2 on the page refers to the program, not to the dataset, so no dataset license is explicit."
+}

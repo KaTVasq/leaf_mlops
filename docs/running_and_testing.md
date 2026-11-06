@@ -16,8 +16,10 @@ depend on which raw files you have downloaded.
 | [5. Label mapping and taxonomy](#5-label-mapping-and-taxonomy) | Mapping files, hierarchy, integer labels | No | No |
 | [6. Dataset to table](#6-dataset-to-table-build_interimpy) | Readers | No | Yes |
 | [7. GBIF verification](#7-gbif-verification-verify_mappingpy) | Mapping against GBIF | Yes (first time) | No |
-| [8. Combining datasets](#8-combining-datasets-build_combinedpy) | Cross-dataset table and conflicts | No | Yes |
+| [8. Combining datasets](#8-combining-datasets-build_combinedpy) | Cross-dataset table, conflicts, report, frozen class ids, final-version check | No | Yes |
 | [9. Storage](#9-storage) | Local and S3-compatible storage | Only for S3 | No |
+| [10. Provenance and license](#10-provenance-and-license-datasetjson) | `dataset.json` rules | No | No |
+| [11. Integrity](#11-integrity-sha-256-hashes) | Hashes of the images | No | Yes |
 
 ## 1. Set-up
 
@@ -47,7 +49,7 @@ environment is not active or `pip install -e ".[dev]"` was not run in this folde
 python -m pytest
 ```
 
-Expected: `65 passed`. No internet, no accounts and no raw images are needed: tests use
+Expected: `101 passed`. No internet, no accounts and no raw images are needed: tests use
 temporary folders and a fake GBIF and a fake S3 client.
 
 Run one area at a time when something fails:
@@ -57,9 +59,13 @@ Run one area at a time when something fails:
 | `tests/test_names.py` | 8 | Name parsing and normalisation, typo suggestions |
 | `tests/test_taxonomy.py` | 7 | Hierarchy, integer labels, inconsistent parents |
 | `tests/test_mapping.py` | 7 | Mapping file validation and taxonomy building |
-| `tests/test_readers.py` | 5 | Swedish Leaf and Flavia readers, problem reporting |
+| `tests/test_readers.py` | 6 | Swedish Leaf and Flavia readers, problem reporting, provenance fields |
 | `tests/test_gbif.py` | 9 | GBIF decisions (verified or review), cache, writing back |
 | `tests/test_combine.py` | 7 | Merging datasets, conflicts, overlap |
+| `tests/test_class_index.py` | 8 | Frozen class ids, detection of edited files and of new classes |
+| `tests/test_provenance.py` | 15 | `dataset.json` rules, accepted license ids, commercial use |
+| `tests/test_integrity.py` | 3 | Hashing, detection of changed and missing files |
+| `tests/test_report.py` | 9 | Dataset report, final-version checks, id columns |
 | `tests/test_storage.py` | 22 | Local and S3 backends with the same tests, unsafe keys, configuration |
 
 ```bash
@@ -143,29 +149,33 @@ Converts the raw files of one dataset into a table with one row per image. It do
 modify or move the raw files.
 
 **Requires** the downloaded images in `datasets/<name>/raw/` (see
-[datasets/README.md](../datasets/README.md) for the layout).
+[datasets/README.md](../datasets/README.md) for the layout) and the file
+`datasets/<name>/dataset.json` with the license and provenance of the dataset (section 10).
 
 ```bash
 python scripts/build_interim.py swedish_leaf
 python scripts/build_interim.py flavia
 ```
 
-Expected for the local copy used when writing this guide:
+Expected for the complete datasets used when writing this guide:
 
 ```text
-150 images written to datasets\swedish_leaf\interim\images.csv
+1125 images written to datasets\swedish_leaf\interim\images.csv
 Taxonomy: 7 families, 10 genera, 11 species
   Acer: 75
-  Ulmus carpinifolia: 75
-Classes in the mapping without images: Salix aurita, Quercus, ...
+  Alnus incana: 75
+  ...
+NOTE: no SHA-256 was computed. Final dataset versions require it: rerun with --hash.
+WARNING: 1 of 15 mapping entries are not verified yet.
 ```
 
-Flavia gives `1907 images`. Open `datasets/<name>/interim/images.csv` to inspect the rows.
+Swedish Leaf has 15 classes of 75 images, and Flavia gives `1907 images`. Open `datasets/<name>/interim/images.csv` to inspect the rows.
 
 How to read the output:
 
-- **"Classes in the mapping without images"** is not an error: that part of the dataset is
-  not in your `raw/` folder. The local Swedish Leaf copy has 2 of 15 classes.
+- **"Classes in the mapping without images"** appears only when part of a dataset is missing
+  from your `raw/` folder (for example if only some Swedish Leaf archives were downloaded). It is
+  not an error, but the combined numbers will be lower than the ones in this guide.
 - **`WARNING: N mapping entries are not verified yet`** means some entries are not
   `verified` (section 7).
 - **`problems.txt`** (in `interim/`) lists files that could not be labelled, such as an
@@ -173,7 +183,9 @@ How to read the output:
 - **`ERROR: ... does not exist`** means the `raw/` folder is missing or in the wrong place.
 
 Optional flags: `--hash` computes the SHA-256 of every image and `--size` reads width and
-height (needs Pillow, installed with `[dev]`). Both are slower.
+height (needs Pillow, installed with `[dev]`). Both are slower. Without `--hash` the command ends
+with `NOTE: no SHA-256 was computed`: that is fine for exploring, but a final version needs the
+hashes (section 8.3).
 
 ## 7. GBIF verification (`verify_mapping.py`)
 
@@ -225,37 +237,116 @@ would be useless.
 
 ## 8. Combining datasets (`build_combined.py`)
 
-Merges the tables of several datasets into one table and one taxonomy, and reports
-contradictions between datasets. Run section 6 for each dataset first.
+Merges the tables of several datasets into one harmonised dataset with one taxonomy, reports
+contradictions between datasets and writes a report. Run section 6 for each dataset first. The result
+is *derived* from its sources: the images and original labels keep the licenses of their sources.
 
 ```bash
 python scripts/build_combined.py swedish_leaf flavia
 ```
 
-Expected for the local copy:
+Expected for the complete datasets:
 
 ```text
-2057 images from 2 datasets written to datasets\combined
-Taxonomy: 22 families, 30 genera, 33 species
+3032 images from 2 datasets written to datasets\combined
+Taxonomy: 25 families, 37 genera, 43 species
 Taxa present in more than one dataset: 0
-Genera present in more than one dataset: 1
+Genera present in more than one dataset: 2
   Acer: flavia=109, swedish_leaf=75
+  Populus: flavia=64, swedish_leaf=150
+Report: datasets\combined\report.md
 ```
 
 Outputs in `datasets/combined/`:
 
 - `images.csv`: all rows with the common columns.
 - `taxonomy.csv`: one row per species or genus-only class. The columns `n_flavia` and
-  `n_swedish_leaf` are the **number of images** of that row in each dataset. Every column
-  definition is in [data_formats.md](data_formats.md).
+  `n_swedish_leaf` are the **number of images** of that row in each dataset.
+- `report.md` and `report.json`: size, class distribution, items pending review, licenses, capture
+  conditions, integrity and overlap (section 8.1).
 
-The overlap counts only the classes whose images are present locally. With the full
-Swedish Leaf the two datasets share two genera (*Acer*, *Populus*).
+Every column and field is defined in [data_formats.md](data_formats.md).
+
+The overlap counts only the classes whose images are present locally; with an incomplete
+download it is lower. The two datasets share no species, only the genera *Acer* and *Populus*.
 
 Exit codes: `0` means no conflicts, `2` means taxonomy conflicts were found and printed as
 `CONFLICT: ...` (for example the same species with two different families in two datasets),
-and `1` means a missing input such as
+`3` means `--release` found something missing (section 8.3), and `1` means a missing input such as
 `ERROR: datasets\nope\interim\images.csv not found`.
+
+### 8.1 Read the report
+
+Open `datasets/combined/report.md`. Check these parts:
+
+- **Class distribution:** the imbalance ratio (maximum / minimum images per class) and the classes
+  below 20 images. For the local data the ratio is 1.54 and no class is small.
+- **Pending review:** the original labels whose mapping is not `verified`. For the local data these
+  are the four Flavia classes of the GBIF analysis plus *Sorbus intermedia* of Swedish Leaf
+  (304 images).
+- **Licenses:** all 3032 images are `LicenseRef-unspecified`, redistribution `unknown`, commercial
+  use `no`.
+- **Integrity:** images without hash (0 only if you ran `build_interim.py --hash`) and groups of
+  identical files under different ids. The complete Swedish Leaf gives 3 such groups, described in
+  [label_verification_analysis.md](label_verification_analysis.md).
+
+The report has no timestamp, so running it twice on the same data gives the same file.
+
+### 8.2 Freeze the class ids (`--version`)
+
+Class ids are positions in an alphabetical list, so adding a class would shift the others. With
+`--version` the first run writes `datasets/releases/<version>/class_index.json` and later runs check
+the data against it. Use a throw-away version name to try it, and delete it afterwards, because a
+real index must only be created when the taxonomy of that version is final:
+
+```bash
+python scripts/build_combined.py swedish_leaf --version demo
+```
+
+Expected: a line `Class index: created frozen index datasets\releases\demo\class_index.json (fingerprint ...)`.
+`images.csv` and `taxonomy.csv` now also contain `family_id`, `genus_id` and `species_id`
+(`species_id` is `-1` for a genus-only class such as *Acer* in Swedish Leaf).
+
+Now try to add classes to the frozen version:
+
+```bash
+python scripts/build_combined.py swedish_leaf flavia --version demo
+```
+
+Expected, with exit code 1:
+
+```text
+ERROR: 77 classes are not in the frozen index datasets\releases\demo\class_index.json (for example family 'Adoxaceae'). A frozen version cannot change: use a new --version.
+```
+
+The count depends on your local files. If it does not stop, the protection is not working. Clean up:
+
+```bash
+rm -r datasets/releases/demo
+```
+
+(PowerShell: `Remove-Item -Recurse datasets\releases\demo`.)
+
+### 8.3 Check that a build can be a final version (`--release`)
+
+```bash
+python scripts/build_interim.py swedish_leaf --hash
+python scripts/build_interim.py flavia --hash
+python scripts/build_combined.py swedish_leaf flavia --version demo --release
+```
+
+Expected with the current data, with exit code 3:
+
+```text
+NOT RELEASABLE: 3 groups of identical files under different image_id (for example swedish_leaf:l8nr016 and swedish_leaf:l8nr017)
+NOT RELEASABLE: images whose label mapping is not verified (needs_review: 304)
+```
+
+This is the correct answer today: five names are still undecided and Swedish Leaf contains three
+pairs of identical scans (see [label_verification_analysis.md](label_verification_analysis.md)). Without `--hash` you also get
+`NOT RELEASABLE: N images without sha256 ...`. When every rule passes the last line is
+`Release checks passed for version ...` and the exit code is 0. The rules are listed in
+section 13 of [data_formats.md](data_formats.md). Remove the `demo` folder afterwards as in 8.2.
 
 ## 9. Storage
 
@@ -312,6 +403,56 @@ S3_SECRET_ACCESS_KEY=<MinIO password>
 Then run the same Python snippet as in 9.1 passing these variables. The result must be
 identical. Never commit `.env`: it is ignored by Git.
 
+## 10. Provenance and license (`dataset.json`)
+
+Each dataset has `datasets/<name>/dataset.json` with its license as a machine-readable identifier.
+Load it:
+
+```bash
+python -c "from leaf_mlops.data.provenance import load_dataset_info; print(load_dataset_info('datasets/flavia/dataset.json'))"
+```
+
+It prints the fields (`license_id='LicenseRef-unspecified'`, `redistribution='unknown'`, ...).
+
+**Try to break it** on a copy so the real file is not touched:
+
+```bash
+mkdir -p /tmp/check/flavia
+sed 's/LicenseRef-unspecified/cc by something/' datasets/flavia/dataset.json > /tmp/check/flavia/dataset.json
+python -c "import sys; from leaf_mlops.data.provenance import load_dataset_info; load_dataset_info(sys.argv[1])" /tmp/check/flavia/dataset.json
+```
+
+Expected: `ProvenanceError: ... license_id 'cc by something' is neither an accepted SPDX id nor
+LicenseRef-...`. Free text is rejected on purpose. Changing `"redistribution": "unknown"` to
+`"allowed"` while the license stays unspecified is also rejected. Delete the copy with
+`rm -r /tmp/check`.
+
+## 11. Integrity (SHA-256 hashes)
+
+With the tables built with `--hash`, check that the raw images are exactly the ones that were hashed:
+
+```bash
+python scripts/build_interim.py swedish_leaf --hash
+python scripts/build_interim.py flavia --hash
+python scripts/build_combined.py swedish_leaf flavia
+python scripts/verify_integrity.py datasets/combined/images.csv
+```
+
+Expected for the local copy:
+
+```text
+ok: 3032, changed: 0, missing: 0, without recorded hash: 0
+```
+
+Exit code 0 means every file matches. `changed` lists files whose content differs from the recorded
+hash, `missing` files that no longer exist (both give exit code 2), and `without recorded hash` rows
+that were built without `--hash`. To see a change detected without touching your data, the unit test
+does it in a temporary folder:
+
+```bash
+python -m pytest tests/test_integrity.py -v
+```
+
 ## Troubleshooting
 
 | Symptom | Likely cause | Fix |
@@ -321,4 +462,7 @@ identical. Never commit `.env`: it is ignored by Git.
 | `ERROR: ... raw does not exist` | Dataset not downloaded | See `datasets/README.md` |
 | `ERROR: GBIF request failed` | No internet or API down | Retry; if the cache exists, use it |
 | `CONFLICT:` and exit code 2 | Datasets disagree on a family or genus | Fix the mapping entries involved |
+| `NOT RELEASABLE:` and exit code 3 | A rule for final versions failed | Read the line: usually hashes (`--hash`) or unverified labels |
+| `classes are not in the frozen index` | The data has a class the version did not have | Use a new `--version`; never edit the frozen file |
+| `ProvenanceError` | `dataset.json` missing a field or with a free-text license | Fix the file following section 10 |
 | PowerShell refuses to activate `.venv` | Execution policy | `Set-ExecutionPolicy -Scope Process RemoteSigned` |

@@ -7,7 +7,8 @@ Complutense de Madrid.
 The platform is shared with two other TFGs (classification and segmentation of tree
 species), and the datasets it produces are meant to be reused by external researchers.
 Its first job is to turn several heterogeneous leaf datasets into one coherent, traceable
-dataset with a unified family / genus / species hierarchy.
+*harmonised dataset derived from them* (not a new dataset: images and original labels keep the
+licenses of their sources) with a unified family / genus / species hierarchy.
 
 ## Status
 
@@ -17,6 +18,10 @@ dataset with a unified family / genus / species hierarchy.
 | Scientific-name normalisation and per-dataset label mappings | Done |
 | Mapping verification against the GBIF Backbone | Done (reports in `datasets/<name>/gbif_report.csv`) |
 | Combined cross-dataset table with taxonomy conflict checks | Done |
+| Structured license and provenance per dataset (`dataset.json`, SPDX ids) | Done |
+| Frozen class ids per dataset version (`class_index.json`) | Done |
+| Dataset report (size, class distribution, pending review, licenses, integrity) | Done |
+| Final-version checks (mandatory SHA-256, verified labels) and integrity check | Done |
 | Storage abstraction (local file system, S3-compatible) | Done |
 | Web application, database models, review workflow, versioned exports | Planned (Django) |
 | Pl@ntNet / PlantCLEF reader | Planned (release to be fixed first) |
@@ -37,8 +42,9 @@ dataset with a unified family / genus / species hierarchy.
 src/leaf_mlops/
     data/       Readers, name normalisation, taxonomy, label mapping, GBIF check, combine
     storage/    Storage interface with local and S3-compatible backends
-scripts/        Command-line entry points (build_interim, verify_mapping, build_combined)
-datasets/       One directory per dataset: label mapping and reports are versioned, images are not
+scripts/        Command-line entry points (build_interim, verify_mapping, build_combined, verify_integrity)
+datasets/       One directory per dataset: mapping, license info and reports are versioned, images are not
+                datasets/releases/<version>/ holds the frozen class index of each final version
 tests/          Automated tests (no network or accounts needed)
 docs/           Requirements and surveys
 report/         LaTeX thesis
@@ -83,10 +89,18 @@ Place the raw images under `datasets/<name>/raw/` (see [datasets/README.md](data
 for where to download them), then:
 
 ```bash
-python scripts/build_interim.py swedish_leaf        # one metadata row per image
-python scripts/build_interim.py flavia
+python scripts/build_interim.py swedish_leaf --hash # one metadata row per image (+ SHA-256)
+python scripts/build_interim.py flavia --hash
 python scripts/verify_mapping.py flavia             # check the label mapping against GBIF
-python scripts/build_combined.py swedish_leaf flavia  # unified table and taxonomy
+python scripts/build_combined.py swedish_leaf flavia  # unified table, taxonomy and report
+python scripts/verify_integrity.py datasets/combined/images.csv   # re-hash the raw images
+```
+
+For a final dataset version, freeze its class ids and check that it is complete. This fails
+(exit code 3) until hashes are present and every label is verified:
+
+```bash
+python scripts/build_combined.py swedish_leaf flavia --version v1.0 --release
 ```
 
 `verify_mapping.py` needs internet access and writes a report; add `--apply` to store the

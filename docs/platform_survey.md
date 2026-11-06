@@ -4,9 +4,10 @@ Technology selection for the platform that creates, annotates, versions and mana
 tree-leaf image datasets. The choice is derived from the requirements in
 [requirements.md](requirements.md) (IDs such as FR-08 or NFR-01 refer to that file).
 
-- **Last updated:** 26/10/2026
+- **Last updated:** 06/11/2026
 - **Status:** the data layer (readers, label mapping, GBIF check, combined table, storage
-  abstraction) is implemented and tested. The web application (Django) is **not built yet**;
+  abstraction, structured license and provenance, frozen class ids, dataset report and
+  hash-based integrity) is implemented and tested. The web application (Django) is **not built yet**;
   this document justifies that choice before it is.
 
 ## 1. Method
@@ -133,7 +134,7 @@ validated to reject absolute paths and `..`, so a key cannot escape the storage 
 ## 5. Resulting architecture
 
 ```text
- readers (per dataset) ──► common table ──► label mapping + GBIF check ──► combined dataset
+ readers (per dataset) ──► common table ──► label mapping + GBIF check ──► harmonised dataset
                                                         │
  Django app (users, roles, review, versions) ◄──────────┘
         │                         │

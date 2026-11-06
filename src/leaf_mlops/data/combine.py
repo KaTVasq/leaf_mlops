@@ -13,9 +13,12 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from leaf_mlops.data.class_index import ClassIndex
 from leaf_mlops.data.names import normalize_key
 from leaf_mlops.data.schema import FIELDS
 from leaf_mlops.data.taxonomy import Taxonomy, TaxonomyError
+
+ID_FIELDS = ("family_id", "genus_id", "species_id")
 
 
 @dataclass
@@ -86,25 +89,33 @@ def combine(tables: dict[str, list[dict[str, str]]]) -> CombinedDataset:
     )
 
 
-def write_combined(result: CombinedDataset, out_dir: str | Path) -> None:
-    """Write ``images.csv`` and ``taxonomy.csv`` (one row per species or genus-only class)."""
+def write_combined(result: CombinedDataset, out_dir: str | Path, index: ClassIndex | None = None) -> None:
+    """Write ``images.csv`` and ``taxonomy.csv`` (one row per species or genus-only class).
+
+    With a frozen ``index`` both files also carry the integer ids of every class
+    (``family_id``, ``genus_id``, ``species_id``; ``-1`` when the species is unknown).
+    """
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    image_fields = [*FIELDS, *ID_FIELDS] if index else list(FIELDS)
     with open(out_dir / "images.csv", "w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=image_fields)
         writer.writeheader()
-        writer.writerows(result.rows)
+        for row in result.rows:
+            ids = index.encode(row["family"], row["genus"], row["species"]) if index else {}
+            writer.writerow({**row, **{f"{level}_id": value for level, value in ids.items()}})
 
     datasets = sorted({d for per in result.counts.values() for d in per})
     taxonomy = result.taxonomy
     with open(out_dir / "taxonomy.csv", "w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["family", "genus", "species", *[f"n_{d}" for d in datasets]])
+        writer.writerow(["family", "genus", "species", *(ID_FIELDS if index else ()), *[f"n_{d}" for d in datasets]])
         entries = [(taxonomy.genus_to_family[g], g, s) for s, g in taxonomy.species_to_genus.items()]
         # genus-only classes, even when the genus also has species in another dataset
         genus_only = [g for g in result.counts if g in taxonomy.genus_to_family and g not in taxonomy.species_to_genus]
         entries += [(taxonomy.genus_to_family[g], g, "") for g in genus_only]
         for family, genus, species in sorted(entries):
             per = result.counts.get(species or genus, {})
-            writer.writerow([family, genus, species, *[per.get(d, 0) for d in datasets]])
+            ids = list(index.encode(family, genus, species).values()) if index else []
+            writer.writerow([family, genus, species, *ids, *[per.get(d, 0) for d in datasets]])

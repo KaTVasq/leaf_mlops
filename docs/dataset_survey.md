@@ -3,7 +3,7 @@
 Candidate datasets for hierarchical (family / genus / species) classification of tree
 species from leaf images.
 
-- **Last updated:** 26/10/2026
+- **Last updated:** 06/11/2026
 - Information below comes from the sources linked in each entry. Anything not confirmed
   is explicitly marked as *not verified*.
 
@@ -111,7 +111,7 @@ requirements is in [requirements.md](requirements.md).
     author and the platform.
   - The BSD-2-Clause license on GitHub applies to the benchmark **code**, not to the images.
   - **Working assumption:** treat the license as *per image* and filter with the `license`
-    column. NC images prevent commercial use of the combined dataset; SA images require
+    column. NC images prevent commercial use of the harmonised dataset; SA images require
     derivatives to be shared under the same license.
 - **Use in this project:** strong candidate if filtered by `organ = leaf` and by license
   before training. It is the best option for a large, realistic leaf dataset with a usable
@@ -254,10 +254,13 @@ was **discarded**: it targets disease detection, not taxonomy.
 These remain candidates for later review, especially if the core dataset shortlist is
 insufficient for the planned hierarchy or class balance.
 
-## 4. License implications for the combined dataset
+## 4. License implications for the harmonised dataset
+
+What this project builds from several sources is a *harmonised dataset derived from them*, not a
+new dataset: the images and the original labels stay under the license of their source.
 
 - The most restrictive license among the images used defines what can be done with the
-  combined dataset.
+  harmonised dataset.
 - **NC** (non-commercial) images prevent a fully open, commercially reusable dataset.
 - **SA** (share-alike) images require derivatives to carry the same license.
 - **Attribution** is mandatory for CC BY and its variants: keep author, source and license
@@ -267,13 +270,35 @@ insufficient for the planned hierarchy or class balance.
 - For this project, the legal risk is not only the dataset itself but also any derived model,
   processed copies or publication assets that may carry the source license forward.
 
-## 5. Proposed shortlist
+## 5. Proposed shortlist and how the next dataset is chosen
 
 1. **Pl@ntNet-300K**, filtered by `organ = leaf` and by license (main candidate).
 2. **Swedish Leaf** and **Flavia**, to validate the pipeline and the hierarchy.
 3. **Leafsnap**, to compare lab and field conditions after removing rulers.
 4. **PlantCLEF and iNaturalist (via GBIF)** as later expansion, filtering by license. The
    PlantCLEF release (2015 or newer) must be justified and fixed first (see 3.6b).
+
+### Choosing the next dataset
+
+A dataset is added because it closes a specific gap in what the project can study, not because it
+increases the number of images. The gaps of the sources already integrated (Swedish Leaf and Flavia)
+are:
+
+| Gap | What it blocks |
+| --- | --- |
+| G1. No species in common between the sources (see [label_verification_analysis.md](label_verification_analysis.md), section 6) | Cross-dataset experiments at species level; only genus level is possible. |
+| G2. Both are scans on a plain background | Study of background and capture domain shift, and training of a segmenter on real backgrounds. |
+| G3. Neither has an explicit license | Redistribution of the harmonised dataset. |
+| G4. Few species per genus | Evaluation of the genus level of the hierarchy. |
+
+| Candidate | Gaps it is expected to close | What must be shown before adopting it |
+| --- | --- | --- |
+| Pl@ntNet-300K (filtered by `organ = leaf` and by license) | G2 and G3 (per-image license), probably G1 and G4 | Species overlap with the integrated sources, measured through the label mapping; license filter applied. |
+| Leafsnap | G2 (lab against field images of the same species) | Direct download and a confirmed license, which are not verified yet. |
+| PlantCLEF (release to be fixed) | G1 and G4 through scale; it is the reference already used by the group | Written justification of the release (2015 or newer) and its license. |
+
+"Expected" means a hypothesis: the overlap with the current taxonomy is measured first, with the same
+mapping and GBIF check used for the integrated datasets, and only then is the dataset added.
 
 ## 6. Gap analysis
 

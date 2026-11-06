@@ -13,6 +13,7 @@ from collections import Counter
 from pathlib import Path
 
 from leaf_mlops.data.mapping import MappingError, build_taxonomy, load_label_mapping
+from leaf_mlops.data.provenance import ProvenanceError, load_dataset_info
 from leaf_mlops.data.readers import load_flavia_ranges, read_flavia, read_swedish_leaf
 from leaf_mlops.data.schema import write_records_csv
 
@@ -32,14 +33,15 @@ def main() -> int:
         return 1
 
     try:
+        info = load_dataset_info(base / "dataset.json")
         mapping = load_label_mapping(base / "label_mapping.json")
         taxonomy = build_taxonomy(mapping)
         if args.dataset == "swedish_leaf":
-            records, problems = read_swedish_leaf(raw_dir, mapping, args.hash, args.size)
+            records, problems = read_swedish_leaf(raw_dir, mapping, info, args.hash, args.size)
         else:
             ranges = load_flavia_ranges(base / "label_ranges.csv")
-            records, problems = read_flavia(raw_dir, ranges, mapping, args.hash, args.size)
-    except (MappingError, OSError) as error:
+            records, problems = read_flavia(raw_dir, ranges, mapping, info, args.hash, args.size)
+    except (MappingError, ProvenanceError, OSError) as error:
         print(f"ERROR: {error}")
         return 1
 
@@ -60,6 +62,8 @@ def main() -> int:
     missing = [e.original for e in mapping.values() if e.original not in per_class]
     if missing:
         print(f"Classes in the mapping without images: {', '.join(missing)}")
+    if not args.hash:
+        print("NOTE: no SHA-256 was computed. Final dataset versions require it: rerun with --hash.")
     unverified = sum(1 for e in mapping.values() if e.status != "verified")
     if unverified:
         print(f"WARNING: {unverified} of {len(mapping)} mapping entries are not verified yet.")
